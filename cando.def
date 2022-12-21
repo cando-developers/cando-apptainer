@@ -1,0 +1,19 @@
+BootStrap: docker
+From: ubuntu:jammy
+
+%post
+    apt-get update
+    apt-get upgrade -y
+    apt-get install -y -o Dpkg::Options::="--force-overwrite" nano wget sudo git locales curl python3-pip nodejs npm
+    bash -c "$(curl -fsSL https://www.thirdlaw.tech/pkg/cando.sh)"
+    echo 'en_US.UTF-8 UTF-8' >/etc/locale.gen
+    locale-gen
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    sh Miniconda3-latest-Linux-x86_64.sh -b
+    rm -rf Miniconda3-latest-Linux-x86_64.sh
+    export PATH="/root/miniconda3/bin:${PATH}"
+    conda install -y -c conda-forge jupyterlab ambertools
+    cando-user-install
+    
+%environment
+    export PATH="/root/miniconda3/bin:${PATH}"
