@@ -9,11 +9,15 @@ From: ubuntu:jammy
     echo 'en_US.UTF-8 UTF-8' >/etc/locale.gen
     locale-gen
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-    sh Miniconda3-latest-Linux-x86_64.sh -b
+    mkdir -p /home/cando/
+    chmod ugo+rwx /home/cando/
+    sh Miniconda3-latest-Linux-x86_64.sh -b -p /home/cando/miniconda3
     rm -rf Miniconda3-latest-Linux-x86_64.sh
-    export PATH="/root/miniconda3/bin:${PATH}"
+    export PATH="/home/cando/miniconda3/bin:${PATH}"
     conda install -y -c conda-forge jupyterlab ambertools
-    cando-user-install
+    HOME=/home/cando cando-user-install
     
 %environment
-    export PATH="/root/miniconda3/bin:${PATH}"
+    export PATH="/home/cando/miniconda3/bin:${PATH}"
+    export AMBERHOME=/home/cando/miniconda3
+    export CLASP_QUICKLISP_DIRECTORY=/home/cando/quicklisp/
